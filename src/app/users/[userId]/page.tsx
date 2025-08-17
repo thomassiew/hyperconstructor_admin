@@ -30,9 +30,10 @@ function formatDuration(startedAt: Date, finishedAt?: Date) {
 export default async function UserDetailPage({
   params,
 }: {
-  params: { userId: string };
+  params: Promise<{ userId: string }>;
 }) {
-  const userWithRelations = await getUserWithRelations(params.userId);
+  const resolvedParams = await params;
+  const userWithRelations = await getUserWithRelations(resolvedParams.userId);
 
   if (!userWithRelations) {
     return (

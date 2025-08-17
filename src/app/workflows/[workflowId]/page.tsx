@@ -17,9 +17,10 @@ function formatDate(date: Date) {
 export default async function WorkflowDetailPage({
   params,
 }: {
-  params: { workflowId: string };
+  params: Promise<{ workflowId: string }>;
 }) {
-  const workflow = await getWorkflowById(params.workflowId);
+  const resolvedParams = await params;
+  const workflow = await getWorkflowById(resolvedParams.workflowId);
 
   if (!workflow) {
     return (
